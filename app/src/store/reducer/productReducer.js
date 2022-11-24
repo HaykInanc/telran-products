@@ -7,6 +7,8 @@ export const productReducer = (state=default_state, action) =>{
             id: Date.now(),
             ...action.payload
         }] 
+    }else if(action.type === 'LOAD_PRODUCTS'){
+        return [...state, ...action.payload]
     }else {
         return state
     }

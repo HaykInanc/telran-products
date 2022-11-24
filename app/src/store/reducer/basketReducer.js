@@ -14,11 +14,20 @@ const checkProduct = (state, product) => {
 export const basketReducer = (state=default_state, action) =>{
     if (action.type === 'ADD_TO_BASKET'){
         return checkProduct(state, action.payload);
+    }else if (action.type === 'INCREMENT_COUNT') {
+        state.find(({id}) => id === action.payload).count++
+        return [...state]
+    }else if (action.type === 'DECREMENT_COUNT') {
+        const target = state.find(({id}) => id === action.payload);
+        if (target.count === 1){
+            state = state.filter(({id}) => id !== action.payload);
+        }else{
+            state.find(({id}) => id === action.payload).count--;
+        }
+        return [...state]
+    }else if (action.type === 'CLEAR_BASKET'){
+        return default_state
     }else {
         return state
     }
 } 
-
-// необходимо получая новый товар в корзину проверять, есть ли он уже
-// если он есть, увеличить ему count на 1
-// если его нет, то добавить свойство count со значением 1
